@@ -7,6 +7,8 @@ import android.view.View;
 
 public class MainActivity extends BaseActivity {
 
+    private BaseActivity mActivity = this;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,8 @@ public class MainActivity extends BaseActivity {
                 case R.id.btn_login:
                     break;
                 case R.id.tv_forgot_password:
+                    Intent intentForgotPassword = new Intent(mActivity, ForgotPasswordActivity.class);
+                    startActivity(intentForgotPassword);
                     break;
                 case R.id.btn_register:
                     Intent intentRegister = new Intent(MainActivity.this, RegisterActivity.class);
