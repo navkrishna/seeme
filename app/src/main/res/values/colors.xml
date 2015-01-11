@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="app_background">@color/accent_material_dark</color>
+    <color name="primary">#f44336</color>
+    <color name="primaryDark">#d32f2f</color>
+    <color name="accent">#80cbc4</color>
+    <color name="navigationBar">#ffcdd2</color>
 
 </resources>
