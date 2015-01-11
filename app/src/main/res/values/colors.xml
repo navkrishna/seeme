@@ -4,6 +4,6 @@
     <color name="primary">#f44336</color>
     <color name="primaryDark">#d32f2f</color>
     <color name="accent">#80cbc4</color>
-    <color name="navigationBar">#ffcdd2</color>
+    <color name="navigationBar">#e57373</color>
 
 </resources>

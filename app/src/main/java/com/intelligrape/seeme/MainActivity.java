@@ -2,17 +2,21 @@ package com.intelligrape.seeme;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewsAndAddListener();
+        setToolbar(R.id.toolbar);
+    }
+
+    private void findViewsAndAddListener() {
         findViewById(R.id.btn_login).setOnClickListener(mOnClickListener);
         findViewById(R.id.tv_forgot_password).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);

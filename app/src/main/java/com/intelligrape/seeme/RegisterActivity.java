@@ -11,5 +11,11 @@ public class RegisterActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        findViewsAndAddListener();
+        setToolbar(R.id.toolbar);
+    }
+
+    private void findViewsAndAddListener() {
     }
 }
