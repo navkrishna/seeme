@@ -10,4 +10,15 @@ public interface ApiDetails extends Api {
     //    String HOME_URL = "http://famelive-api.qa3.intelligrape.net/api/v1";
     String API_VERSION = "1.0";
     String APP_KEY = "myAppKey";
+
+    String ACTION_REGISTER = "register";
+    String ACTION_LOGIN = "login";
+    String ACTION_LOGOUT = "logout";
+    String ACTION_RESEND_VERIFICATION_CODE = "resendVerificationToken";
+    String ACTION_FORGOT_PASSWORD = "forgotPassword";
+    String ACTION_VALIDATE_FORGOT_PASSWORD = "validateForgotPasswordCode";
+    String ACTION_UPDATE_FORGOT_PASSWORD = "updateForgotPassword";
+    String ACTION_VERIFY_ACCOUNT = "verifyAccount";
+    String ACTION_CHANGE_PASSWORD = "changePassword";
+    String ACTION_FETCH_EVENT_DETAILS = "fetchEventDetails";
 }
