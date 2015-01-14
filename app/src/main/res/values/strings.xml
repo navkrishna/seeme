@@ -19,4 +19,5 @@
     <string name="label_enter_email">Enter your email address, the instructions will be sent to this email</string>
     <string name="label_send_code">Send Code</string>
 
+    <string name="no_internet_connection">Network not available</string>
 </resources>
