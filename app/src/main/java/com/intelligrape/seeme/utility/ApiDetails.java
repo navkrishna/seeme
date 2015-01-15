@@ -21,4 +21,12 @@ public interface ApiDetails extends Api {
     String ACTION_VERIFY_ACCOUNT = "verifyAccount";
     String ACTION_CHANGE_PASSWORD = "changePassword";
     String ACTION_FETCH_EVENT_DETAILS = "fetchEventDetails";
+
+    String API_KEY_STATUS = "status";
+    String API_KEY_MESSAGE = "message";
+    String API_KEY_DATA = "data";
+    String API_KEY_EMAIL = "email";
+    String API_KEY_ACCESS_TOKEN = "access_token";
+    String API_KEY_USER_ID = "userId";
+    String API_KEY_IS_ACCOUNT_VERIFIED = "isAccountVerified";
 }

@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.intelligrape.seeme.R;
@@ -32,13 +34,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by rajendra on 17/9/14.
  */
 public class Utility {
-    private static final String JPEG_FILE_PREFIX = "IMG_";
-    private static final String JPEG_FILE_SUFFIX = ".jpg";
     private final int timeoutConnection = 10 * 1000; //in Miliseconds
     private final int timeoutSocket = 15 * 1000;
     private Context context;
@@ -220,7 +222,7 @@ public class Utility {
         return url.replaceAll(" ", "%20");
     }
 
-    public void showToastMessage(String msg) {
+    public static void showToastMessage(Context context, String msg) {
         Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
     }
 
@@ -232,5 +234,25 @@ public class Utility {
             Logger.d("RegisterActivity", "I never expected this! Going down, going down!" + e);
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getText(TextView textView) {
+        return textView != null ? textView.getText().toString().trim() : "";
+    }
+
+    public static void setError(TextView textView, String message) {
+        textView.setText(message);
+        textView.setVisibility(View.VISIBLE);
+    }
+
+    public static void clearError(TextView textView) {
+        textView.setText("");
+        textView.setVisibility(View.INVISIBLE);
+    }
+
+    public static boolean validate(String regexPattern, String field) {
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(field);
+        return matcher.matches();
     }
 }
