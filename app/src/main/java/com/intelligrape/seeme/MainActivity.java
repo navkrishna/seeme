@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void requestLogin() {
-        HashMap<String, String> paramMap = new HashMap<String, String>();
+        HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("email", Utility.getText(mEtUsername));
         paramMap.put("password", Utility.getText(mEtPassword));
         paramMap.put("actionName", ApiDetails.ACTION_LOGIN);
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
                         PrefStore.setString(mActivity, AppConstants.PREF_KEY_USER_ID, login.getUserId());
                         PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_LOGGED_IN, true);
                         PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_ACCOUNT_VERIFIED, login.isAccountVerified());
-//                        showHomeScreen();
+                        startActivity(new Intent(mActivity, ValidateAccount.class));
                     } else {
                         Utility.setError(mTvErrorMessage, login.getMessage());
                         PrefStore.clearAll(mActivity);

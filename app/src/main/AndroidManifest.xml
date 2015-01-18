@@ -28,6 +28,10 @@
             android:name=".ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ValidateAccount"
+            android:label="@string/title_activity_validate_account"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

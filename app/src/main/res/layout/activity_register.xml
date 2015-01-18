@@ -44,7 +44,6 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_username"
             android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
@@ -52,7 +51,6 @@
             android:id="@+id/et_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_password"
             android:hint="@string/hint_confirm_password"
             android:inputType="textPassword" />
 
@@ -60,14 +58,12 @@
             android:id="@+id/cb_terms_and_conditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_confirm_password"
             android:text="@string/label_agree_t_n_c" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cb_terms_and_conditions"
             android:text="@string/label_register" />
 
     </LinearLayout>
