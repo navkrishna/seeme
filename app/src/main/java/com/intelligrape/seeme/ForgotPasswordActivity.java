@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.intelligrape.seeme.loader.APICaller;
 import com.intelligrape.seeme.loader.LoaderCallback;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 
 
 public class ForgotPasswordActivity extends BaseActivity {
-    private TextView mTvErrorMessage;
     private EditText mEtEmail;
 
     @Override
@@ -32,7 +30,6 @@ public class ForgotPasswordActivity extends BaseActivity {
     }
 
     private void findViewsAndAddListener() {
-        mTvErrorMessage = (TextView) findViewById(R.id.error_bar);
         mEtEmail = (EditText) findViewById(R.id.et_email);
         findViewById(R.id.btn_send_code).setOnClickListener(mOnClickListener);
     }
@@ -42,7 +39,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_send_code:
-                    Utility.clearError(mTvErrorMessage);
+//                    Utility.clearError(mTvErrorMessage);
                     if (validate())
                         requestForgotPasswordCode();
                     break;
@@ -60,7 +57,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         }
 
         if (message.length() > 0) {
-            Utility.setError(mTvErrorMessage, message);
+//            Utility.setError(mTvErrorMessage, message);
         }
         return message.length() == 0;
     }
@@ -79,13 +76,14 @@ public class ForgotPasswordActivity extends BaseActivity {
         loaderCallback.setServerResponse(new APICaller() {
             @Override
             public void onComplete(Model model) {
+                Utility.showToastMessage(mActivity, model.getMessage());
                 if (model.getStatus() == 1) {
 //                        showHomeScreen();
                 } else {
-                    Utility.setError(mTvErrorMessage, model.getMessage());
+//                    Utility.setError(mTvErrorMessage, model.getMessage());
                     PrefStore.clearAll(mActivity);
                 }
-                Utility.setError(mTvErrorMessage, model.getMessage());
+//                Utility.setError(mTvErrorMessage, model.getMessage());
             }
         });
     }

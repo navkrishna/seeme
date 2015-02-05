@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.intelligrape.seeme.loader.APICaller;
 import com.intelligrape.seeme.loader.LoaderCallback;
@@ -23,7 +22,6 @@ import java.util.HashMap;
 public class RegisterActivity extends BaseActivity {
 
     private EditText etUsername, etEmail, etPassword, etConfirmPassword;
-    private TextView tvErrorBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,6 @@ public class RegisterActivity extends BaseActivity {
         etEmail = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_password);
         etConfirmPassword = (EditText) findViewById(R.id.et_confirm_password);
-        tvErrorBar = (TextView) findViewById(R.id.error_bar);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
     }
 
@@ -48,7 +45,6 @@ public class RegisterActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_register:
-                    Utility.clearError(tvErrorBar);
                     if (validate())
                         registerUser();
                     break;
@@ -83,7 +79,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         if (message.length() > 0) {
-            Utility.setError(tvErrorBar, message.trim());
+//            Utility.setError(tvErrorBar, message.trim());
         }
 
         return message.length() == 0;
@@ -105,11 +101,11 @@ public class RegisterActivity extends BaseActivity {
         loaderCallback.setServerResponse(new APICaller() {
             @Override
             public void onComplete(Model model) {
+                Utility.showToastMessage(mActivity, model.getMessage());
                 if (model.getStatus() == 1) {
                     finish();
-                    Utility.showToastMessage(mActivity, model.getMessage());
                 } else {
-                    Utility.setError(tvErrorBar, model.getMessage());
+//                    Utility.setError(tvErrorBar, model.getMessage());
                 }
             }
         });

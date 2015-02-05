@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.intelligrape.seeme.loader.APICaller;
 import com.intelligrape.seeme.loader.LoaderCallback;
@@ -24,7 +23,6 @@ public class MainActivity extends BaseActivity {
 
     private BaseActivity mActivity = this;
     private EditText mEtUsername, mEtPassword;
-    private TextView mTvErrorMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,6 @@ public class MainActivity extends BaseActivity {
     private void findViewsAndAddListener() {
         mEtUsername = (EditText) findViewById(R.id.et_username);
         mEtPassword = (EditText) findViewById(R.id.et_password);
-        mTvErrorMessage = (TextView) findViewById(R.id.error_bar);
 
         findViewById(R.id.btn_login).setOnClickListener(mOnClickListener);
         findViewById(R.id.tv_forgot_password).setOnClickListener(mOnClickListener);
@@ -50,7 +47,7 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_login:
-                    Utility.clearError(mTvErrorMessage);
+//                    Utility.clearError(mTvErrorMessage);
                     if (validate())
                         requestLogin();
                     break;
@@ -79,8 +76,8 @@ public class MainActivity extends BaseActivity {
         else if (password.length() == 0)
             message = "Enter password";
 
-        if (message.length() > 0)
-            Utility.setError(mTvErrorMessage, message);
+//        if (message.length() > 0)
+//            Utility.setError(mTvErrorMessage, message);
 
         return message.length() == 0;
 
@@ -104,6 +101,7 @@ public class MainActivity extends BaseActivity {
             public void onComplete(Model model) {
                 if (model instanceof Login) {
                     Login login = (Login) model;
+                    Utility.showToastMessage(mActivity, model.getMessage());
                     if (login.getStatus() == 1) {
                         PrefStore.setString(mActivity, AppConstants.PREF_KEY_EMAIL_ID, login.getEmail());
                         PrefStore.setString(mActivity, AppConstants.PREF_KEY_ACCESS_TOKEN, login.getAccessToken());
@@ -112,10 +110,10 @@ public class MainActivity extends BaseActivity {
                         PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_ACCOUNT_VERIFIED, login.isAccountVerified());
                         startActivity(new Intent(mActivity, ValidateAccount.class));
                     } else {
-                        Utility.setError(mTvErrorMessage, login.getMessage());
+//                        Utility.setError(mTvErrorMessage, login.getMessage());
                         PrefStore.clearAll(mActivity);
                     }
-                    Utility.setError(mTvErrorMessage, login.getMessage());
+//                    Utility.setError(mTvErrorMessage, login.getMessage());
                 }
             }
         });
