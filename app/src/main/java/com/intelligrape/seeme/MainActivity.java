@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class MainActivity extends BaseActivity {
 
     private BaseActivity mActivity = this;
-    private EditText mEtUsername, mEtPassword;
+    private EditText mEtEmail, mEtPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void findViewsAndAddListener() {
-        mEtUsername = (EditText) findViewById(R.id.et_username);
+        mEtEmail = (EditText) findViewById(R.id.et_email);
         mEtPassword = (EditText) findViewById(R.id.et_password);
 
         findViewById(R.id.btn_login).setOnClickListener(mOnClickListener);
         findViewById(R.id.tv_forgot_password).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
 
-        mEtUsername.addTextChangedListener(new TextWatcher() {
+        mEtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (before == 0)
-                    Utility.clearError(mActivity, mEtUsername, getString(R.string.hint_email));
+                    Utility.clearError(mActivity, mEtEmail, getString(R.string.hint_email));
             }
 
             @Override
@@ -98,16 +98,16 @@ public class MainActivity extends BaseActivity {
 
     private boolean validate() {
         String message;
-        String username = Utility.getText(mEtUsername);
+        String email = Utility.getText(mEtEmail);
         String password = Utility.getText(mEtPassword);
-        if (username.length() == 0) {
-            message = "Enter email";
-            Utility.setError(mActivity, mEtUsername, message);
-        } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, username)) {
-            message = "Enter valid email id";
-            Utility.setError(mActivity, mEtUsername, message);
+        if (email.length() == 0) {
+            message = getString(R.string.error_no_email);
+            Utility.setError(mActivity, mEtEmail, message);
+        } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, email)) {
+            message = getString(R.string.error_invalid_email);
+            Utility.setError(mActivity, mEtEmail, message);
         } else if (password.length() == 0) {
-            message = "Enter password";
+            message = getString(R.string.error_no_password);
             Utility.setError(mActivity, mEtPassword, message);
         } else {
             return true;
@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity {
 
     private void requestLogin() {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("email", Utility.getText(mEtUsername));
+        paramMap.put("email", Utility.getText(mEtEmail));
         paramMap.put("password", Utility.getText(mEtPassword));
         paramMap.put("actionName", ApiDetails.ACTION_LOGIN);
         final Request request = new Request();
