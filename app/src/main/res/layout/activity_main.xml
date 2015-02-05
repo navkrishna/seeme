@@ -30,30 +30,27 @@
 
             <EditText
                 android:id="@+id/et_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/EditTextStyle"
                 android:hint="@string/hint_username"
                 android:inputType="textAutoComplete"
                 android:singleLine="true" />
 
             <EditText
                 android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_password"
+                style="@style/EditTextStyle"
+                android:hint="@string/hint_email"
                 android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle.Red"
                 android:layout_marginTop="20dp"
                 android:text="@string/label_login" />
 
             <TextView
                 android:id="@+id/tv_forgot_password"
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/label_forgot_password" />
@@ -67,6 +64,7 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -74,8 +72,7 @@
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle.Green"
                 android:layout_marginTop="10dp"
                 android:text="@string/label_register_here" />
         </LinearLayout>
