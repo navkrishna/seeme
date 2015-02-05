@@ -3,7 +3,6 @@ package com.intelligrape.seeme;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ public class RegisterActivity extends BaseActivity {
 
     private EditText etUsername, etEmail, etPassword, etConfirmPassword;
     private TextView tvErrorBar;
-    private CheckBox cbTermsAndConditions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
 
         findViewsAndAddListener();
-        setToolbar(R.id.toolbar);
+        setToolbar(R.id.toolbar, true);
     }
 
     private void findViewsAndAddListener() {
@@ -41,7 +39,6 @@ public class RegisterActivity extends BaseActivity {
         etEmail = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_password);
         etConfirmPassword = (EditText) findViewById(R.id.et_confirm_password);
-        cbTermsAndConditions = (CheckBox) findViewById(R.id.cb_terms_and_conditions);
         tvErrorBar = (TextView) findViewById(R.id.error_bar);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
     }
@@ -83,9 +80,6 @@ public class RegisterActivity extends BaseActivity {
             message += "\nConfirm your password";
         } else if (!password.equals(confirmPassword)) {
             message += "\nPassword and confirm password does not match";
-        }
-        if (!cbTermsAndConditions.isChecked()) {
-            message += "\nAgree to Terms and Condition to register";
         }
 
         if (message.length() > 0) {
