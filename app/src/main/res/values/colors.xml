@@ -9,4 +9,14 @@
     <color name="transparent">#00000000</color>
     <color name="error_background">#77c6c6c6</color>
 
+    <color name="btn_red_normal">#eb0737</color>
+    <color name="btn_red_pressed">#bd0028</color>
+    <color name="btn_green_normal">#02c299</color>
+    <color name="btn_green_pressed">#00a783</color>
+    
+    <color name="edittext_hint">#ff999999</color>
+    <color name="edittext_text">#ff757575</color>
+    <color name="textview_text">#ff757575</color>
+    <color name="textview_dark_text">#ff272727</color>
+
 </resources>
