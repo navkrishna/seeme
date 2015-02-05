@@ -28,7 +28,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
         findViewsAndAddListener();
-        setToolbar(R.id.toolbar);
+        setToolbar(R.id.toolbar, true);
     }
 
     private void findViewsAndAddListener() {

@@ -25,6 +25,11 @@ public class BaseActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
     }
 
+    void setToolbar(int toolbarId, boolean displayHomeAsUpEnabled) {
+        setToolbar(toolbarId);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
