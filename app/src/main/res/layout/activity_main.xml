@@ -27,14 +27,14 @@
             <EditText
                 android:id="@+id/et_username"
                 style="@style/EditTextStyle"
-                android:hint="@string/hint_username"
+                android:hint="@string/hint_email"
                 android:inputType="textAutoComplete"
                 android:singleLine="true" />
 
             <EditText
                 android:id="@+id/et_password"
                 style="@style/EditTextStyle"
-                android:hint="@string/hint_email"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword" />
 
             <Button

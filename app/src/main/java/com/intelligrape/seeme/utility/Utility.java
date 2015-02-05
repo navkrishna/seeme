@@ -1,12 +1,13 @@
 package com.intelligrape.seeme.utility;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -240,14 +241,18 @@ public class Utility {
         return textView != null ? textView.getText().toString().trim() : "";
     }
 
-    public static void setError(TextView textView, String message) {
-        textView.setText(message);
-        textView.setVisibility(View.VISIBLE);
+    public static void setError(Activity activity, EditText editText, String message) {
+        editText.setText("");
+        editText.setHint(message);
+        editText.setHintTextColor(activity.getResources().getColor(R.color.btn_red_normal));
+        editText.setBackgroundResource(R.drawable.custom_edit_text_material_error);
+        editText.requestFocus();
     }
 
-    public static void clearError(TextView textView) {
-        textView.setText("");
-        textView.setVisibility(View.INVISIBLE);
+    public static void clearError(Activity activity, EditText editText, String hint) {
+        editText.setHint(hint);
+        editText.setHintTextColor(activity.getResources().getColor(R.color.edittext_hint));
+        editText.setBackgroundResource(R.drawable.custom_edit_text_material);
     }
 
     public static boolean validate(String regexPattern, String field) {

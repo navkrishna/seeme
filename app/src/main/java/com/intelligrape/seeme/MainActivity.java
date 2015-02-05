@@ -2,6 +2,8 @@ package com.intelligrape.seeme;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -40,6 +42,38 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_login).setOnClickListener(mOnClickListener);
         findViewById(R.id.tv_forgot_password).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
+
+        mEtUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (before == 0)
+                    Utility.clearError(mActivity, mEtUsername, getString(R.string.hint_email));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mEtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (before == 0)
+                    Utility.clearError(mActivity, mEtPassword, getString(R.string.hint_password));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -47,7 +81,6 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_login:
-//                    Utility.clearError(mTvErrorMessage);
                     if (validate())
                         requestLogin();
                     break;
@@ -64,22 +97,22 @@ public class MainActivity extends BaseActivity {
     };
 
     private boolean validate() {
-        String message = "";
+        String message;
         String username = Utility.getText(mEtUsername);
         String password = Utility.getText(mEtPassword);
-        if (username.length() == 0 && password.length() == 0)
-            message = "Enter username and password.";
-        else if (username.length() == 0)
-            message = "Enter username";
-        else if (!Utility.validate(AppConstants.EMAIL_PATTERN, username))
+        if (username.length() == 0) {
+            message = "Enter email";
+            Utility.setError(mActivity, mEtUsername, message);
+        } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, username)) {
             message = "Enter valid email id";
-        else if (password.length() == 0)
+            Utility.setError(mActivity, mEtUsername, message);
+        } else if (password.length() == 0) {
             message = "Enter password";
-
-//        if (message.length() > 0)
-//            Utility.setError(mTvErrorMessage, message);
-
-        return message.length() == 0;
+            Utility.setError(mActivity, mEtPassword, message);
+        } else {
+            return true;
+        }
+        return false;
 
     }
 
