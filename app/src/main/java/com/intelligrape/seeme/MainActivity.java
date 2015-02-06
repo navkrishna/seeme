@@ -14,6 +14,7 @@ import com.intelligrape.seeme.parser.LoginParser;
 import com.intelligrape.seeme.utility.ApiDetails;
 import com.intelligrape.seeme.utility.AppConstants;
 import com.intelligrape.seeme.utility.PrefStore;
+import com.intelligrape.seeme.utility.RequestParam;
 import com.intelligrape.seeme.utility.SMTextWatcher;
 import com.intelligrape.seeme.utility.Utility;
 
@@ -87,16 +88,15 @@ public class MainActivity extends BaseActivity {
 
     private void requestLogin() {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("email", Utility.getText(mEtEmail));
-        paramMap.put("password", Utility.getText(mEtPassword));
-        paramMap.put("actionName", ApiDetails.ACTION_LOGIN);
-        final Request request = new Request();
+        paramMap.put(RequestParam.EMAIL, Utility.getText(mEtEmail));
+        paramMap.put(RequestParam.PASSWORD, Utility.getText(mEtPassword));
+        paramMap.put(RequestParam.ACTION_NAME, ApiDetails.ACTION_LOGIN);
+        Request request = new Request();
         request.setDialogMessage(getString(R.string.progress_dialog_msg));
         request.setParamMap(paramMap);
         request.setUrl(ApiDetails.HOME_URL);
         request.setRequestType(Request.HttpRequestType.POST);
-        LoginParser loginParser = new LoginParser();
-        final LoaderCallback loaderCallback = new LoaderCallback(mActivity, loginParser);
+        LoaderCallback loaderCallback = new LoaderCallback(mActivity, new LoginParser());
         loaderCallback.requestToServer(request);
         loaderCallback.setServerResponse(new APICaller() {
             @Override
@@ -111,11 +111,11 @@ public class MainActivity extends BaseActivity {
                         PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_LOGGED_IN, true);
                         PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_ACCOUNT_VERIFIED, login.isAccountVerified());
                         startActivity(new Intent(mActivity, ValidateAccount.class));
+                        finish();
                     } else {
-//                        Utility.setError(mTvErrorMessage, login.getMessage());
+                        Utility.showToastMessage(mActivity, login.getMessage());
                         PrefStore.clearAll(mActivity);
                     }
-//                    Utility.setError(mTvErrorMessage, login.getMessage());
                 }
             }
         });
