@@ -1,7 +1,6 @@
 package com.intelligrape.seeme;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,6 +11,8 @@ import com.intelligrape.seeme.model.Request;
 import com.intelligrape.seeme.parser.MessageParser;
 import com.intelligrape.seeme.utility.ApiDetails;
 import com.intelligrape.seeme.utility.AppConstants;
+import com.intelligrape.seeme.utility.RequestParam;
+import com.intelligrape.seeme.utility.SMTextWatcher;
 import com.intelligrape.seeme.utility.Utility;
 
 import java.util.HashMap;
@@ -38,6 +39,10 @@ public class RegisterActivity extends BaseActivity {
         etPassword = (EditText) findViewById(R.id.et_password);
         etConfirmPassword = (EditText) findViewById(R.id.et_confirm_password);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
+        new SMTextWatcher(etUsername, getString(R.string.hint_username));
+        new SMTextWatcher(etEmail, getString(R.string.hint_email));
+        new SMTextWatcher(etPassword, getString(R.string.hint_password));
+        new SMTextWatcher(etConfirmPassword, getString(R.string.hint_confirm_password));
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -53,50 +58,44 @@ public class RegisterActivity extends BaseActivity {
     };
 
     private boolean validate() {
-        String message = "";
         String userName = Utility.getText(etUsername);
         String email = Utility.getText(etEmail);
         String password = Utility.getText(etPassword);
         String confirmPassword = Utility.getText(etConfirmPassword);
 
-        if (TextUtils.isEmpty(userName)) {
-            message = "Provide username";
-        }
-        if (TextUtils.isEmpty(email)) {
-            message += "\nEnter your email id";
+        if (userName.isEmpty()) {
+            Utility.setError(etUsername, getString(R.string.error_no_username));
+        } else if (email.isEmpty()) {
+            Utility.setError(etEmail, getString(R.string.error_no_email));
         } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, email)) {
-            message += "\nEnter a valid email id";
-        }
-        if (TextUtils.isEmpty(password)) {
-            message += "\nProvide a password";
+            Utility.setError(etEmail, getString(R.string.error_invalid_email));
+        } else if (password.isEmpty()) {
+            Utility.setError(etPassword, getString(R.string.error_no_password));
         } else if (password.length() < 6) {
-            message += "\nMinimum length of password is 6";
-        }
-        if (TextUtils.isEmpty(confirmPassword)) {
-            message += "\nConfirm your password";
+            Utility.setError(etPassword, getString(R.string.error_invalid_password));
+        } else if (confirmPassword.isEmpty()) {
+            Utility.setError(etConfirmPassword, getString(R.string.error_no_confirm_password));
         } else if (!password.equals(confirmPassword)) {
-            message += "\nPassword and confirm password does not match";
+            Utility.setError(etConfirmPassword, getString(R.string.error_password_does_not_match));
+        } else {
+            return true;
         }
 
-        if (message.length() > 0) {
-//            Utility.setError(tvErrorBar, message.trim());
-        }
-
-        return message.length() == 0;
+        return false;
     }
 
     private void registerUser() {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("username", Utility.getText(etUsername));
-        paramMap.put("email", Utility.getText(etEmail));
-        paramMap.put("password", Utility.getText(etPassword));
-        paramMap.put("actionName", ApiDetails.ACTION_REGISTER);
-        final Request request = new Request();
+        paramMap.put(RequestParam.USERNAME, Utility.getText(etUsername));
+        paramMap.put(RequestParam.EMAIL, Utility.getText(etEmail));
+        paramMap.put(RequestParam.PASSWORD, Utility.getText(etPassword));
+        paramMap.put(RequestParam.ACTION_NAME, ApiDetails.ACTION_REGISTER);
+        Request request = new Request();
         request.setDialogMessage(getString(R.string.progress_dialog_msg));
         request.setParamMap(paramMap);
         request.setUrl(ApiDetails.HOME_URL);
         request.setRequestType(Request.HttpRequestType.POST);
-        final LoaderCallback loaderCallback = new LoaderCallback(mActivity, new MessageParser());
+        LoaderCallback loaderCallback = new LoaderCallback(mActivity, new MessageParser());
         loaderCallback.requestToServer(request);
         loaderCallback.setServerResponse(new APICaller() {
             @Override
@@ -104,8 +103,6 @@ public class RegisterActivity extends BaseActivity {
                 Utility.showToastMessage(mActivity, model.getMessage());
                 if (model.getStatus() == 1) {
                     finish();
-                } else {
-//                    Utility.setError(tvErrorBar, model.getMessage());
                 }
             }
         });

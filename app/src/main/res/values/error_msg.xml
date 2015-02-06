@@ -6,5 +6,8 @@
     <string name="error_no_password">Enter password</string>
     <string name="error_invalid_password">Enter password (Minimum 6 chars)</string>
     <string name="error_no_validation_code">Enter validation code</string>
+    <string name="error_no_username">Enter username</string>
+    <string name="error_no_confirm_password">Confirm your password</string>
+    <string name="error_password_does_not_match">Password and confirm password does not match</string>
 
 </resources>

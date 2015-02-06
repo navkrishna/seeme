@@ -8,4 +8,5 @@ public interface RequestParam {
     String PASSWORD = "password";
     String ACTION_NAME = "actionName";
     String VERIFICATION_TOKEN = "verificationToken";
+    String USERNAME = "username";
 }
