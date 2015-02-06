@@ -12,7 +12,8 @@ import com.intelligrape.seeme.model.Request;
 import com.intelligrape.seeme.parser.MessageParser;
 import com.intelligrape.seeme.utility.ApiDetails;
 import com.intelligrape.seeme.utility.AppConstants;
-import com.intelligrape.seeme.utility.PrefStore;
+import com.intelligrape.seeme.utility.RequestParam;
+import com.intelligrape.seeme.utility.SMTextWatcher;
 import com.intelligrape.seeme.utility.Utility;
 
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class ForgotPasswordActivity extends BaseActivity {
     private void findViewsAndAddListener() {
         mEtEmail = (EditText) findViewById(R.id.et_email);
         findViewById(R.id.btn_send_code).setOnClickListener(mOnClickListener);
+        new SMTextWatcher(mEtEmail, getString(R.string.hint_email));
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -39,7 +41,6 @@ public class ForgotPasswordActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_send_code:
-//                    Utility.clearError(mTvErrorMessage);
                     if (validate())
                         requestForgotPasswordCode();
                     break;
@@ -48,42 +49,35 @@ public class ForgotPasswordActivity extends BaseActivity {
     };
 
     private boolean validate() {
-        String message = "";
         String email = Utility.getText(mEtEmail);
         if (TextUtils.isEmpty(email)) {
-            message = "Provide an email id";
+            Utility.setError(mEtEmail, getString(R.string.error_no_email));
         } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, email)) {
-            message = "Provide a valid email id";
+            Utility.setError(mEtEmail, getString(R.string.error_invalid_email));
+        } else {
+            return true;
         }
-
-        if (message.length() > 0) {
-//            Utility.setError(mTvErrorMessage, message);
-        }
-        return message.length() == 0;
+        return false;
     }
 
     private void requestForgotPasswordCode() {
         HashMap<String, String> paramMap = new HashMap<String, String>();
-        paramMap.put("email", Utility.getText(mEtEmail));
-        paramMap.put("actionName", ApiDetails.ACTION_FORGOT_PASSWORD);
-        final Request request = new Request();
+        paramMap.put(RequestParam.EMAIL, Utility.getText(mEtEmail));
+        paramMap.put(RequestParam.ACTION_NAME, ApiDetails.ACTION_FORGOT_PASSWORD);
+        Request request = new Request();
         request.setDialogMessage(getString(R.string.progress_dialog_msg));
         request.setParamMap(paramMap);
         request.setUrl(ApiDetails.HOME_URL);
         request.setRequestType(Request.HttpRequestType.POST);
-        final LoaderCallback loaderCallback = new LoaderCallback(mActivity, new MessageParser());
+        LoaderCallback loaderCallback = new LoaderCallback(mActivity, new MessageParser());
         loaderCallback.requestToServer(request);
         loaderCallback.setServerResponse(new APICaller() {
             @Override
             public void onComplete(Model model) {
                 Utility.showToastMessage(mActivity, model.getMessage());
                 if (model.getStatus() == 1) {
-//                        showHomeScreen();
-                } else {
-//                    Utility.setError(mTvErrorMessage, model.getMessage());
-                    PrefStore.clearAll(mActivity);
+                    finish();
                 }
-//                Utility.setError(mTvErrorMessage, model.getMessage());
             }
         });
     }
