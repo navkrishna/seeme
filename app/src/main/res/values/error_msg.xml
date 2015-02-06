@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="error_no_email">Enter email</string>
-    <string name="error_invalid_email">Enter valid email</string>
+    <string name="error_no_email">Enter email id</string>
+    <string name="error_invalid_email">Enter valid email id</string>
     <string name="error_no_password">Enter password</string>
     <string name="error_invalid_password">Enter password (Minimum 6 chars)</string>
+    <string name="error_no_validation_code">Enter validation code</string>
 
 </resources>
