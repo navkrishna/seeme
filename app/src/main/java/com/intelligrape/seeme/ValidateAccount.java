@@ -33,6 +33,7 @@ public class ValidateAccount extends BaseActivity {
     private void findViewsAndAddListener() {
         mEtCode = (EditText) findViewById(R.id.et_code);
         findViewById(R.id.btn_verify_account).setOnClickListener(mOnClickListener);
+        findViewById(R.id.btn_resend_validation_code).setOnClickListener(mOnClickListener);
         new SMTextWatcher(mEtCode, getString(R.string.hint_email));
     }
 
@@ -46,6 +47,9 @@ public class ValidateAccount extends BaseActivity {
                     } else {
                         requestVerifyAccount();
                     }
+                    break;
+                case R.id.btn_resend_validation_code:
+                    resendVerifyEmail();
                     break;
             }
         }
@@ -71,6 +75,26 @@ public class ValidateAccount extends BaseActivity {
                     PrefStore.setBoolean(mActivity, AppConstants.PREF_KEY_IS_ACCOUNT_VERIFIED, true);
 //                    startActivity(new Intent(mActivity, ValidateAccount.class));
                 }
+            }
+        });
+
+    }
+
+    private void resendVerifyEmail() {
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put(RequestParam.EMAIL, PrefStore.getString(mActivity, AppConstants.PREF_KEY_EMAIL_ID));
+        paramMap.put(RequestParam.ACTION_NAME, ApiDetails.ACTION_RESEND_VERIFICATION_CODE);
+        Request request = new Request();
+        request.setDialogMessage(getString(R.string.progress_dialog_msg));
+        request.setParamMap(paramMap);
+        request.setUrl(ApiDetails.HOME_URL);
+        request.setRequestType(Request.HttpRequestType.POST);
+        LoaderCallback loaderCallback = new LoaderCallback(mActivity, new MessageParser());
+        loaderCallback.requestToServer(request);
+        loaderCallback.setServerResponse(new APICaller() {
+            @Override
+            public void onComplete(Model model) {
+                Utility.showToastMessage(mActivity, model.getMessage());
             }
         });
 

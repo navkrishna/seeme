@@ -66,8 +66,8 @@
                 android:text="@string/label_havent_received_verification_mail" />
 
             <Button
-                android:id="@+id/btn_register"
-                style="@style/ButtonStyle.Green"
+                android:id="@+id/btn_resend_validation_code"
+                style="@style/ButtonStyle.Red"
                 android:layout_marginBottom="20dp"
                 android:text="@string/label_send_verification_mail" />
         </LinearLayout>
