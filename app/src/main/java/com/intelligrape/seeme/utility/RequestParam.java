@@ -7,4 +7,5 @@ public interface RequestParam {
     String EMAIL = "email";
     String PASSWORD = "password";
     String ACTION_NAME = "actionName";
+    String VERIFICATION_TOKEN = "verificationToken";
 }
