@@ -20,6 +20,8 @@
     <string name="label_send_code">Send Code</string>
     <string name="label_verify_account">Verify Account</string>
     <string name="label_validate_account">Enter verification code to verify account and proceed</string>
+    <string name="label_havent_received_verification_mail">Haven\'t received verification email yet?</string>
+    <string name="label_send_verification_mail">Send verification email</string>
 
     <string name="no_internet_connection">Network not available</string>
     <string name="progress_dialog_msg">Please wait...</string>
