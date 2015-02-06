@@ -1,6 +1,5 @@
 package com.intelligrape.seeme.utility;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -241,17 +240,15 @@ public class Utility {
         return textView != null ? textView.getText().toString().trim() : "";
     }
 
-    public static void setError(Activity activity, EditText editText, String message) {
+    public static void setError(EditText editText, String message) {
         editText.setText("");
         editText.setHint(message);
-        editText.setHintTextColor(activity.getResources().getColor(R.color.btn_red_normal));
         editText.setBackgroundResource(R.drawable.custom_edit_text_material_error);
         editText.requestFocus();
     }
 
-    public static void clearError(Activity activity, EditText editText, String hint) {
+    public static void clearError(EditText editText, String hint) {
         editText.setHint(hint);
-        editText.setHintTextColor(activity.getResources().getColor(R.color.edittext_hint));
         editText.setBackgroundResource(R.drawable.custom_edit_text_material);
     }
 

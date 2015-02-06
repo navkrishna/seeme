@@ -2,8 +2,6 @@ package com.intelligrape.seeme;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,6 +14,7 @@ import com.intelligrape.seeme.parser.LoginParser;
 import com.intelligrape.seeme.utility.ApiDetails;
 import com.intelligrape.seeme.utility.AppConstants;
 import com.intelligrape.seeme.utility.PrefStore;
+import com.intelligrape.seeme.utility.SMTextWatcher;
 import com.intelligrape.seeme.utility.Utility;
 
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import java.util.HashMap;
 
 public class MainActivity extends BaseActivity {
 
-    private BaseActivity mActivity = this;
     private EditText mEtEmail, mEtPassword;
 
     @Override
@@ -43,37 +41,8 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.tv_forgot_password).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_register).setOnClickListener(mOnClickListener);
 
-        mEtEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (before == 0)
-                    Utility.clearError(mActivity, mEtEmail, getString(R.string.hint_email));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        mEtPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (before == 0)
-                    Utility.clearError(mActivity, mEtPassword, getString(R.string.hint_password));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+        new SMTextWatcher(mEtEmail, getString(R.string.hint_email));
+        new SMTextWatcher(mEtPassword, getString(R.string.hint_password));
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -102,13 +71,13 @@ public class MainActivity extends BaseActivity {
         String password = Utility.getText(mEtPassword);
         if (email.length() == 0) {
             message = getString(R.string.error_no_email);
-            Utility.setError(mActivity, mEtEmail, message);
+            Utility.setError(mEtEmail, message);
         } else if (!Utility.validate(AppConstants.EMAIL_PATTERN, email)) {
             message = getString(R.string.error_invalid_email);
-            Utility.setError(mActivity, mEtEmail, message);
+            Utility.setError(mEtEmail, message);
         } else if (password.length() == 0) {
             message = getString(R.string.error_no_password);
-            Utility.setError(mActivity, mEtPassword, message);
+            Utility.setError(mEtPassword, message);
         } else {
             return true;
         }
